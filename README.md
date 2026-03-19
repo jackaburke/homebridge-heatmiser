@@ -1,6 +1,8 @@
 # homebridge-heatmiser-ib
 ## Heatmiser Thermostats Homebridge plugin
 
+This repository is based on https://github.com/iainbullock/homebridge-heatmiser-ib.
+
 This is an Accessory plugin for Nick Farina's Homebridge implementation (https://github.com/nfarina/homebridge)
 
 Based on homebridge-heatmiser by pumamood (https://github.com/pumamood/homebridge-heatmiser), which is in turn based on the version by Thosirl (https://github.com/thosirl/homebridge-heatmiser).
