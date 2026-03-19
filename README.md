@@ -17,11 +17,7 @@ Requirements:
 - Node.js 18+
 - Homebridge 1.6+
 
-Plugin is NodeJS module published through NPM
-
-You can install this plugin the same way you installed Homebridge - as a global NPM module. For example:
-
-    sudo npm install -g homebridge-heatmiser-ib
+This plugin is maintained as a repository-only project.
 
 
 Add to config.json under "accessories" array
