@@ -1,19 +1,22 @@
 {
   "name": "homebridge-heatmiser-ib",
   "displayName": "Homebridge Heatmiser IB",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Heatmiser Thermostats Homebridge plugin",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/iainbullock/homebridge-heatmiser-ib.git"
+    "url": "https://github.com/iainbullock/homebridge-heatmiser-ib.git"
   },
   "bugs": {
     "url": "https://github.com/iainbullock/homebridge-heatmiser-ib/issues"
   },
   "engines": {
-    "node": ">=0.12.0",
-    "homebridge": ">=0.2.0"
+    "node": ">=18.0.0",
+    "homebridge": ">=1.6.0"
+  },
+  "peerDependencies": {
+    "homebridge": ">=1.6.0"
   },
   "dependencies": {
     "heatmiser": "^2.0.0"

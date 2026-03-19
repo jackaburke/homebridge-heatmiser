@@ -5,12 +5,17 @@ This is an Accessory plugin for Nick Farina's Homebridge implementation (https:/
 
 Based on homebridge-heatmiser by pumamood (https://github.com/pumamood/homebridge-heatmiser), which is in turn based on the version by Thosirl (https://github.com/thosirl/homebridge-heatmiser).
 
-Reads and Writes with the Heatmiser are done asyncronously by polling, which is makes the plugin faster and less prone to lock ups caused by the slow Heatmiser response.
+Reads and writes with the Heatmiser are done asynchronously by polling, which makes the plugin faster and less prone to lockups caused by slow Heatmiser responses.
 
 Tested with Heatmiser Wifi accessory, not with Netmonitor.
 
 
 # Installing Plugin
+
+Requirements:
+
+- Node.js 18+
+- Homebridge 1.6+
 
 Plugin is NodeJS module published through NPM
 
@@ -25,7 +30,7 @@ Options for "your_model" are: "DT", "DT-E", "PRT", "PRT-E", "PRTHW" (see https:/
 
 The mintemp & maxtemp options set the range on the thermostat faceplate. The target temperature step size is now 1 degree as required by Heatmiser.
 
-The refreshInterval option controls how often the Heatmiser is polled to read / write its parameters (in milliseconds).
+The refreshInterval option controls how often the Heatmiser is polled to read/write its parameters (in milliseconds). A sensible default is applied if omitted.
 
 ```json
     {

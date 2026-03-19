@@ -1,6 +1,8 @@
 'use strict';
 var heatmiser = require("heatmiser");
 var Characteristic, Service;
+var DEFAULT_REFRESH_INTERVAL = 60000;
+var MIN_REFRESH_INTERVAL = 5000;
 
 module.exports = function (homebridge) {
     console.log("homebridge API version: " + homebridge.version);
@@ -12,17 +14,38 @@ module.exports = function (homebridge) {
 
 function HeatmiserWifi(log, config, api) {
     this.log = log;
+    this.name = config["name"] || "Thermostat";
     this.ip_address = config["ip_address"];
     this.pin = config["pin"];
-    this.port = config["port"];
-    this.model = config["model"];
-    this.mintemp = config["mintemp"];
-    this.maxtemp = config["maxtemp"];
-    this.refreshInterval = config["refreshInterval"];
+    this.port = Number(config["port"]) || 8068;
+    this.model = config["model"] || "PRT";
+    this.mintemp = Number(config["mintemp"]);
+    this.maxtemp = Number(config["maxtemp"]);
+    this.refreshInterval = Number(config["refreshInterval"]);
     this.writeTHCSNeeded = 0;
     this.writeTTNeeded = 0;
 
-    this.thermostat = new Service.Thermostat();
+    if (!this.ip_address || typeof this.pin === 'undefined') {
+      this.log('Missing required config values: ip_address and pin are required.');
+    }
+
+    if (Number.isNaN(this.mintemp)) {
+      this.mintemp = 5;
+    }
+
+    if (Number.isNaN(this.maxtemp)) {
+      this.maxtemp = 24;
+    }
+
+    if (this.maxtemp <= this.mintemp) {
+      this.maxtemp = this.mintemp + 1;
+    }
+
+    if (Number.isNaN(this.refreshInterval) || this.refreshInterval < MIN_REFRESH_INTERVAL) {
+      this.refreshInterval = DEFAULT_REFRESH_INTERVAL;
+    }
+
+    this.thermostat = new Service.Thermostat(this.name);
     this.thermostat.getCharacteristic(Characteristic.CurrentHeatingCoolingState)
       .on('get', this.getCurrentHeatingCoolingState.bind(this));
     this.thermostat.getCharacteristic(Characteristic.TargetHeatingCoolingState)
@@ -47,7 +70,7 @@ HeatmiserWifi.prototype = {
 
     setTargetHeatingCoolingState: function (setTargetHeatingCoolingState, callback) {
       this.writeTHCSNeeded = 1;
-      var THCS = this.thermostat.getCharacteristic(Characteristic.TargetHeatingCoolingState).value; // 0,1,2,3
+      var THCS = setTargetHeatingCoolingState; // 0,1,2,3
       this.log('setTargetHeatingCoolingState: ' + THCS);
     callback(null);
     },
@@ -78,7 +101,7 @@ HeatmiserWifi.prototype = {
 
     setTargetTemperature: function (targetTemperature, callback) {
         this.writeTTNeeded = 1;
-        var TT = this.thermostat.getCharacteristic(Characteristic.TargetTemperature).value; // 10-38
+        var TT = targetTemperature; // 10-38
         this.log('setTargetTemperature: ' + TT);
       callback(null);
     },
@@ -199,12 +222,12 @@ HeatmiserWifi.prototype = {
               var mode;
               this.log('Polling. Read values: heatingOn: ' + heatingOn + ' awayMode: ' + awayMode + ' current_temp: ' + current_temp + ' target_temp: ' + target_temp + ' units: ' + units);
 
-              if (heatingOn == true) {mode = Characteristic.CurrentHeatingCoolingState.HEAT;}
-                else if (awayMode == true) {mode = Characteristic.CurrentHeatingCoolingState.OFF;}
+              if (heatingOn === true) {mode = Characteristic.CurrentHeatingCoolingState.HEAT;}
+                else if (awayMode === true) {mode = Characteristic.CurrentHeatingCoolingState.OFF;}
                   else {mode = Characteristic.CurrentHeatingCoolingState.COOL;}
               this.thermostat.getCharacteristic(Characteristic.CurrentHeatingCoolingState).updateValue(mode);
 
-              if (awayMode == true) {mode = Characteristic.TargetHeatingCoolingState.OFF;}
+              if (awayMode === true) {mode = Characteristic.TargetHeatingCoolingState.OFF;}
                   else {mode = Characteristic.TargetHeatingCoolingState.AUTO;}
               this.thermostat.getCharacteristic(Characteristic.TargetHeatingCoolingState).updateValue(mode);
 
