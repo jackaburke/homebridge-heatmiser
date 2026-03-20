@@ -1,4 +1,4 @@
-# homebridge-heatmiser-ib
+# homebridge-heatmiser-mk2
 ## Heatmiser Thermostats Homebridge plugin
 
 This repository is based on https://github.com/iainbullock/homebridge-heatmiser-ib.

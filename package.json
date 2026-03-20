@@ -1,15 +1,15 @@
 {
-  "name": "homebridge-heatmiser-ib",
-  "displayName": "Homebridge Heatmiser IB",
+  "name": "homebridge-heatmiser-mk2",
+  "displayName": "Homebridge Heatmiser Mk2",
   "version": "1.1.0",
   "description": "Heatmiser Thermostats Homebridge plugin",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/iainbullock/homebridge-heatmiser-ib.git"
+    "url": "https://github.com/jackaburke/homebridge-heatmiser.git"
   },
   "bugs": {
-    "url": "https://github.com/iainbullock/homebridge-heatmiser-ib/issues"
+    "url": "https://github.com/jackaburke/homebridge-heatmiser/issues"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -21,14 +21,14 @@
   "dependencies": {
     "heatmiser": "^2.0.0"
   },
-  "author": "iainbullock",
+  "author": "jackaburke",
   "keywords": [
     "homebridge-plugin-ib",
     "homebridge-plugin",
     "Heatmiser",
     "thermostat"
   ],
-  "homepage": "https://github.com/iainbullock/homebridge-heatmiser-ib#readme",
+  "homepage": "https://github.com/jackaburke/homebridge-heatmiser#readme",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {

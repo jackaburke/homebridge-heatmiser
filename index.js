@@ -9,7 +9,7 @@ module.exports = function (homebridge) {
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
 
-    homebridge.registerAccessory('homebridge-heatmiser-ib', 'HeatmiserWifi', HeatmiserWifi, false);
+    homebridge.registerAccessory('homebridge-heatmiser-mk2', 'HeatmiserWifi', HeatmiserWifi, false);
 };
 
 function HeatmiserWifi(log, config, api) {
